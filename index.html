@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="es-CL">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AsesoRICE — Asesor de convivencia escolar con el reglamento de su colegio</title>
+<meta name="description" content="AsesoRICE ayuda a profesores jefe y equipos de convivencia a analizar cada caso con el Reglamento Interno de Convivencia Escolar de su propio colegio.">
+<meta property="og:title" content="AsesoRICE">
+<meta property="og:description" content="Cada caso de convivencia, analizado con el reglamento de su colegio.">
+<meta property="og:url" content="https://asesorice.cl">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;7..72,600;7..72,700&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --tinta:     #1C2B3A;   /* texto y titulares */
+    --tinta-s:   #4A5866;   /* texto secundario */
+    --pizarra:   #2D5C4C;   /* acción principal */
+    --pizarra-h: #234A3D;
+    --papel:     #FBFBF8;   /* fondo */
+    --hoja:      #FFFFFF;   /* superficie de la cita */
+    --linea:     #D8DDD6;
+    --resaltador:#F4DB6A;   /* marca de resaltado, un solo uso */
+    --serif: "Literata", Georgia, serif;
+    --sans:  "Public Sans", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0; background: var(--papel); color: var(--tinta);
+    font: 400 1.0625rem/1.65 var(--sans);
+  }
+  a { color: var(--pizarra); }
+  a:focus-visible, button:focus-visible, summary:focus-visible {
+    outline: 3px solid var(--pizarra); outline-offset: 3px; border-radius: 4px;
+  }
+  .contenedor { max-width: 46rem; margin: 0 auto; padding: 0 1.25rem; }
+
+  header.sitio { padding: 1.5rem 0; }
+  .marca { font: 700 1.375rem/1 var(--serif); color: var(--tinta); text-decoration: none; letter-spacing: -0.01em; }
+
+  /* Portada */
+  .portada { padding: 2.5rem 0 3rem; }
+  .portada h1 {
+    font: 700 clamp(2rem, 5.2vw, 3.1rem)/1.12 var(--serif);
+    letter-spacing: -0.02em; margin: 0 0 1rem; max-width: 20ch;
+  }
+  .portada .bajada { font-size: 1.1875rem; color: var(--tinta-s); margin: 0 0 2rem; max-width: 38rem; }
+  .video {
+    width: 100%; aspect-ratio: 16 / 9; display: block;
+    background: var(--tinta); border-radius: 10px;
+    box-shadow: 0 1px 0 var(--linea), 0 18px 40px -24px rgba(28, 43, 58, .55);
+  }
+  .accion { margin-top: 1.75rem; display: flex; flex-wrap: wrap; align-items: center; gap: .75rem 1.25rem; }
+  .boton {
+    display: inline-flex; align-items: center; gap: .6rem;
+    background: var(--pizarra); color: #fff; text-decoration: none;
+    font: 600 1rem/1 var(--sans); padding: .95rem 1.35rem; border-radius: 8px;
+  }
+  .boton:hover { background: var(--pizarra-h); }
+  .boton svg { width: 1.2rem; height: 1.2rem; flex: none; }
+  .accion small { color: var(--tinta-s); font-size: .9375rem; }
+
+  section { padding: 3rem 0; border-top: 1px solid var(--linea); }
+  h2 { font: 700 1.75rem/1.2 var(--serif); letter-spacing: -0.01em; margin: 0 0 1.5rem; }
+
+  /* Cómo funciona: es una secuencia real */
+  ol.pasos { list-style: none; counter-reset: paso; margin: 0; padding: 0; }
+  ol.pasos li { counter-increment: paso; display: grid; grid-template-columns: 2.5rem 1fr; gap: 0 1rem; padding: .9rem 0; }
+  ol.pasos li::before {
+    content: counter(paso); font: 600 1.25rem/1.6 var(--serif); color: var(--pizarra);
+  }
+  ol.pasos strong { display: block; font-weight: 600; }
+  ol.pasos span { color: var(--tinta-s); }
+
+  /* Ejemplo de cita: el elemento memorable */
+  .cita {
+    margin: 2rem 0 0; background: var(--hoja); border: 1px solid var(--linea);
+    border-left: 4px solid var(--pizarra); border-radius: 6px; padding: 1.25rem 1.5rem;
+    font: 400 1.0625rem/1.75 var(--serif);
+  }
+  .cita p { margin: 0 0 .6rem; }
+  .cita mark {
+    background: linear-gradient(transparent 12%, var(--resaltador) 12%, var(--resaltador) 88%, transparent 88%);
+    color: inherit; padding: 0 .1em;
+  }
+  .cita footer { font: 500 .875rem/1.4 var(--sans); color: var(--tinta-s); }
+
+  /* Preguntas frecuentes */
+  details { border-bottom: 1px solid var(--linea); }
+  details:first-of-type { border-top: 1px solid var(--linea); }
+  summary {
+    cursor: pointer; list-style: none; padding: 1.1rem 2rem 1.1rem 0; position: relative;
+    font: 600 1.125rem/1.4 var(--serif);
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary::after {
+    content: ""; position: absolute; right: .35rem; top: 1.45rem; width: .55rem; height: .55rem;
+    border-right: 2px solid var(--pizarra); border-bottom: 2px solid var(--pizarra);
+    transform: rotate(45deg); transition: transform .2s ease;
+  }
+  details[open] summary::after { transform: rotate(-135deg); top: 1.7rem; }
+  details .respuesta { padding: 0 0 1.25rem; color: var(--tinta-s); max-width: 40rem; }
+  details .respuesta p { margin: 0 0 .75rem; }
+  details .respuesta p:last-child { margin-bottom: 0; }
+
+  .cierre { text-align: left; }
+  .cierre p { color: var(--tinta-s); max-width: 36rem; }
+
+  footer.sitio { padding: 2rem 0 3rem; color: var(--tinta-s); font-size: .9375rem; border-top: 1px solid var(--linea); }
+
+  @media (prefers-reduced-motion: reduce) { summary::after { transition: none; } }
+</style>
+</head>
+<body>
+
+<header class="sitio">
+  <div class="contenedor"><a class="marca" href="/">AsesoRICE</a></div>
+</header>
+
+<main>
+  <div class="portada">
+    <div class="contenedor">
+      <h1>Cada caso de convivencia, analizado con el reglamento de su colegio.</h1>
+      <p class="bajada">AsesoRICE ayuda a profesores jefe y equipos de convivencia a tipificar la falta, identificar los protocolos que corresponden y preparar un plan de acción, citando los artículos de su propio Reglamento Interno.</p>
+
+      <video class="video" controls playsinline preload="metadata">
+        <source src="asesorice.mp4" type="video/mp4">
+        Su navegador no puede reproducir el video. <a href="asesorice.mp4">Descárguelo aquí</a>.
+      </video>
+
+      <div class="accion">
+        <a class="boton" data-whatsapp href="#">
+          <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2c0 1.3.9 2.5 1 2.7.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.6-.3z"/></svg>
+          Escríbanos por WhatsApp
+        </a>
+        <small>Le mostramos AsesoRICE con un caso real de su colegio.</small>
+      </div>
+    </div>
+  </div>
+
+  <section aria-labelledby="como">
+    <div class="contenedor">
+      <h2 id="como">Cómo funciona</h2>
+      <ol class="pasos">
+        <li><div><strong>El profesor describe el caso</strong><span>Con sus palabras, indicando quiénes participaron.</span></div></li>
+        <li><div><strong>Se protege la identidad de los estudiantes</strong><span>Los nombres se reemplazan por códigos antes de que el relato llegue a la inteligencia artificial.</span></div></li>
+        <li><div><strong>AsesoRICE propone un análisis</strong><span>Tipificación de la falta, protocolos que se activan, comunicaciones y plan de acción, con los artículos del reglamento que lo respaldan.</span></div></li>
+        <li><div><strong>El profesor revisa y decide</strong><span>Puede corregir cada punto antes de cerrar el caso y descargar el informe en PDF.</span></div></li>
+      </ol>
+
+      <blockquote class="cita">
+        <p>El <mark>Artículo 217</mark> contempla expresamente «Deteriorar y/o destruir bienes, recursos y/o infraestructura del Colegio, de compañeros o de la comunidad escolar» como falta grave. Esta descripción coincide directamente con la conducta: rayar con plumón las puertas del baño constituye un deterioro de infraestructura del colegio.</p>
+        <footer>Extracto de un caso de prueba: un estudiante raya con plumón las puertas del baño. Cada cita indica el artículo exacto del reglamento, para que pueda verificarla.</footer>
+      </blockquote>
+    </div>
+  </section>
+
+  <section aria-labelledby="preguntas">
+    <div class="contenedor">
+      <h2 id="preguntas">Preguntas frecuentes</h2>
+
+      <details>
+        <summary>¿AsesoRICE decide las sanciones?</summary>
+        <div class="respuesta">
+          <p>No. AsesoRICE sugiere un análisis y un plan; la decisión siempre es del colegio, respetando el debido proceso que establece su reglamento. El informe lo indica de forma explícita.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>¿Funciona con el reglamento de mi colegio?</summary>
+        <div class="respuesta">
+          <p>Sí, y esa es su diferencia. Antes de empezar cargamos su Reglamento Interno de Convivencia Escolar y sus protocolos, y a partir de ellos armamos el catálogo de tipos de caso de su colegio. Las citas salen de su documento, no de un reglamento genérico.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>¿Qué pasa con los datos de los estudiantes?</summary>
+        <div class="respuesta">
+          <p>Los nombres se reemplazan por códigos antes de que el relato llegue a la inteligencia artificial, y los datos de contacto y el RUT nunca se envían. Cada funcionario ingresa con su propia clave.</p>
+          <p>El tratamiento de los datos se formaliza con un contrato de encargo, en línea con la Ley 21.719 de protección de datos personales.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>¿Qué entrega al final de cada caso?</summary>
+        <div class="respuesta">
+          <p>Un informe en PDF con los hechos, las personas involucradas y su calidad (afectado, responsable o testigo), la clasificación de la falta, las comunicaciones a realizar y el plan de acción. Si el asesor hizo preguntas, cada aclaración del profesor queda junto a la pregunta que la motivó.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>¿Reemplaza al encargado de convivencia?</summary>
+        <div class="respuesta">
+          <p>No. Es un apoyo para que cada profesor jefe aplique el reglamento de forma consistente y llegue a la conversación con el equipo de convivencia con el caso bien planteado.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>¿Qué necesita el colegio para empezar?</summary>
+        <div class="respuesta">
+          <p>Su reglamento y protocolos vigentes, y la lista de cursos, estudiantes y funcionarios que participarán. AsesoRICE funciona en el navegador: no hay nada que instalar.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>¿Qué inteligencia artificial utiliza?</summary>
+        <div class="respuesta">
+          <p>Claude, de Anthropic, guiado por reglas que lo obligan a citar solo artículos de su reglamento y de la normativa aplicable, y a preguntar cuando el relato no es claro antes de proponer medidas.</p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <section class="cierre" aria-labelledby="hablemos">
+    <div class="contenedor">
+      <h2 id="hablemos">Conversemos</h2>
+      <p>Cuéntenos de su colegio y coordinamos una demostración con su propio reglamento.</p>
+      <div class="accion">
+        <a class="boton" data-whatsapp href="#">
+          <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2c0 1.3.9 2.5 1 2.7.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.6-.3z"/></svg>
+          Escríbanos por WhatsApp
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="sitio">
+  <div class="contenedor">AsesoRICE, Santiago de Chile.</div>
+</footer>
+
+<script>
+  // Número en formato internacional, sin "+" ni espacios (ej. 56912345678).
+  const WHATSAPP = "56984070341";
+  const MENSAJE  = "Hola, quiero saber más sobre AsesoRICE para mi colegio.";
+  const enlace = "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(MENSAJE);
+  document.querySelectorAll("[data-whatsapp]").forEach(a => {
+    a.href = enlace; a.target = "_blank"; a.rel = "noopener";
+  });
+</script>
+</body>
+</html>
